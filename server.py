@@ -11,7 +11,7 @@ application = Flask(__name__)
 
 @application.route("/")
 def index():
-    return "Hello JinHyuk!"
+    return "대창구이 먹고싶다.ㅎ"
 
 
 if __name__ == "__main__":
