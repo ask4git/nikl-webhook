@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from app import app
-from flask import jsonify, request
+from app import to_slack as ts
+from flask import request, jsonify
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['POST'])
 def index():
-    return "대창구이 존맛!"
+    json_data = request.json
+    ts.send_to_slack(json_data)
+    return "대창구이 먹고싶다ㅎ"
