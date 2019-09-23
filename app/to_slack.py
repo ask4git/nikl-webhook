@@ -9,11 +9,11 @@ import requests
 from conllu import parse
 from collections import OrderedDict
 from .url_slack import NIKL_SLACK_CH_URL
+from .url_slack import FALLBACK_SLACK_CH_URL
 
 
 def send_to_slack(json_data):
     """
-
     :param json_data:
     :return:
     """
@@ -97,11 +97,9 @@ def get_slack_channels_url(channel_name):
     :param channel_name:
     :return:
     """
-    if channel_name in NIKL_SLACK_CH_URL:
-        return NIKL_SLACK_CH_URL[channel_name]
 
-    # need exception
-    return None
+    channel_name = NIKL_SLACK_CH_URL.get(channel_name) or FALLBACK_SLACK_CH_URL
+    return channel_name
 
 
 def parse_simple_conllu(sentence):
