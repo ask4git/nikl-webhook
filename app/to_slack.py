@@ -52,17 +52,17 @@ def create_slack_message(json_data):
                     },
                     {
                         "title": "어절",
-                        "value": json_data["context"]["word"],
+                        "value": json_data["topicContext"]["word"],
                         "short": True
                     },
                     {
                         "title": "문장",
-                        "value": "```{}```".format(json_data["context"]["sentence"]),
+                        "value": "```{}```".format(json_data["topicContext"]["sentence"]),
                         "short": False
                     },
                     {
                         "title": "구문/의미역 분석결과",
-                        "value": "```{}```".format(parse_simple_conllu(json_data["context"]["source"])),
+                        "value": "```{}```".format(parse_simple_conllu(json_data["topicContext"]["source"])),
                         "short": False
                     },
                     {
