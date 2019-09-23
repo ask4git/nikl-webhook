@@ -10,4 +10,4 @@ from flask import request, jsonify
 def index():
     json_data = request.json
     ts.send_to_slack(json_data)
-    return "대창구이 먹고싶다ㅎ"
+    return "success"

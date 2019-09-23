@@ -1,6 +1,9 @@
 
 # -*- coding: utf-8 -*-
 
+# 입력데이터가 json이 아닐때
+# key error
+
 from app import app
 
 if __name__ == '__main__':
