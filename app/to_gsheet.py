@@ -42,7 +42,9 @@ def create_row_data(json_data):
     """
     data = {
         "values": [
-            ['tq', '문장 id', '원시문장', '어절 id', 'word', '작업자', '작업자 계', '내용', '비고'],
+            ['Time', json_data["taskName"], json_data["topicContext"]["sentence"],
+             json_data["topicContext"]["word"], "Word", "Name",
+             json_data["topicRequester"], json_data["topicContent"]],
         ]
     }
     return data
