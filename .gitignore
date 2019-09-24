@@ -1,0 +1,8 @@
+.idea/
+__pycache__/
+app/__pycache__/
+routes/__pycache__/
+static/__pycache__/
+app/url_slack.py
+app/url_gsheet.py
+app/nikl-gsheet-key.json

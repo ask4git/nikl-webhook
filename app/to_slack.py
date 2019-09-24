@@ -5,11 +5,11 @@ to_slack.py
 
 import json
 import requests
-
 from conllu import parse
 from collections import OrderedDict
 from .url_slack import NIKL_SLACK_CH_URL
 from .url_slack import FALLBACK_SLACK_CH_URL
+from .url_slack import ERROR_REPORT_CH_URL
 
 import logging
 
@@ -18,6 +18,7 @@ logger = logging.getLogger()
 
 def send_to_slack(json_data):
     """
+
     :param json_data:
     :return:
     """
@@ -37,8 +38,7 @@ def create_slack_message(json_data):
     :param json_data:
     :return:
     """
-    print(json.dumps(json_data))
-    logging.warn(json.dumps(json_data))
+    # logging.warn(json.dumps(json_data))
     payload = {
         "username": '[{topicCategory}] [사용자이름]'.format(**json_data),
         "text": "",
@@ -97,15 +97,14 @@ def create_slack_message(json_data):
     return payload
 
 
-def get_slack_channels_url(channel_name):
+def get_slack_channels_url(channel):
     """
-    return Slack channel webhook url
-    :param channel_name:
+    Return Slack channel webhook url
+    :param channel:
     :return:
     """
-
-    channel_name = NIKL_SLACK_CH_URL.get(channel_name) or FALLBACK_SLACK_CH_URL
-    return channel_name
+    channel = NIKL_SLACK_CH_URL.get(channel) or FALLBACK_SLACK_CH_URL
+    return channel
 
 
 def parse_simple_conllu(sentence):
@@ -126,3 +125,11 @@ def parse_simple_conllu(sentence):
             result += '\t_'
         result += '\n'
     return result
+
+
+# def error_report_to_slack():
+#     # create message
+#     payload = ''
+#     requests.post(
+#         ERROR_REPORT_CH_URL, data=json.dumps(payload), headers={'Content-Type': 'application/json'}
+#     )
