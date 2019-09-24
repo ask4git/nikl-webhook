@@ -11,6 +11,10 @@ from collections import OrderedDict
 from .url_slack import NIKL_SLACK_CH_URL
 from .url_slack import FALLBACK_SLACK_CH_URL
 
+import logging
+
+logger = logging.getLogger()
+
 
 def send_to_slack(json_data):
     """
@@ -33,6 +37,8 @@ def create_slack_message(json_data):
     :param json_data:
     :return:
     """
+    print(json.dumps(json_data))
+    logging.warn(json.dumps(json_data))
     payload = {
         "username": '[{topicCategory}] [사용자이름]'.format(**json_data),
         "text": "",
