@@ -6,7 +6,7 @@ index.py
 from app import app
 from app import to_slack as ts
 from app import to_gsheet as tg
-from flask import request, jsonify
+from flask import request
 
 
 @app.route('/', methods=['POST'])

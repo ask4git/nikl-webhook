@@ -6,8 +6,9 @@ to_gsheet.py
 from httplib2 import Http
 from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
-from .url_gsheet import NIKL_GSHEET_URL
-from .url_gsheet import FALLBACK_GSHEET_URL
+from app.keys.url_gsheet import NIKL_GSHEET_URL
+from app.keys.url_gsheet import FALLBACK_GSHEET_URL
+from datetime import datetime
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -21,7 +22,7 @@ def send_to_gsheet(json_data):
     body = create_row_data(json_data)
 
     # json 파일로 서비스 계정 credential 정의
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('app/nikl-gsheet-key.json', SCOPES)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name('app/keys/nikl-gsheet-key.json', SCOPES)
     http_auth = credentials.authorize(Http())
     service = build('sheets', 'v4', http=http_auth)
 
@@ -30,19 +31,19 @@ def send_to_gsheet(json_data):
                                                      range='Sheet1!A:I',
                                                      valueInputOption='RAW',
                                                      body=body)
+
     # execute
     request.execute()
 
 
 def create_row_data(json_data):
     """
-
     :param json_data:
     :return:
     """
     data = {
         "values": [
-            ['Time', json_data["taskName"], json_data["topicContext"]["sentence"],
+            [str(datetime.now()), json_data["taskName"], json_data["topicContext"]["sentence"],
              json_data["topicContext"]["word"], "Word", "Name",
              json_data["topicRequester"], json_data["topicContent"]],
         ]
@@ -50,11 +51,10 @@ def create_row_data(json_data):
     return data
 
 
-def get_gsheet_url(category_name):
+def get_gsheet_url(category):
     """
-
-    :param sheet_file:
+    :param category:
     :return:
     """
-    gsheet_url = NIKL_GSHEET_URL.get(category_name) or FALLBACK_GSHEET_URL
+    gsheet_url = NIKL_GSHEET_URL.get(category) or FALLBACK_GSHEET_URL
     return gsheet_url
