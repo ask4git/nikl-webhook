@@ -35,7 +35,7 @@ def create_slack_message(json_data):
     :return:
     """
     payload = {
-        "username": '[{topicCategory}] [사용자이름]'.format(**json_data),
+        "username": '[{topicCategory}] {topicRequester}'.format(**json_data),
         "text": "",
         "attachments": [
             {
@@ -43,18 +43,18 @@ def create_slack_message(json_data):
                 "fields": [
                     {
                         "title": "사용자",
-                        "value": '[사용자이름] <{topicRequester}>'.format(**json_data),
+                        "value": json_data["topicRequester"],
                         "short": False
                     },
                     {
                         "title": "문장 ID",
                         "value": json_data["taskName"],
-                        "short": True
+                        "short": False
                     },
                     {
                         "title": "어절",
                         "value": json_data["topicContext"]["word"],
-                        "short": True
+                        "short": False
                     },
                     {
                         "title": "문장",
