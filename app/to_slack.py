@@ -6,12 +6,14 @@ to_slack.py
 import json
 import logging
 import requests
+import pickle
 from conllu import parse
 from collections import OrderedDict
 from app.keys.url_slack import NIKL_SLACK_CH_URL
 from app.keys.url_slack import FALLBACK_SLACK_CH_URL
 
 logger = logging.getLogger()
+dictionary = pickle.load(open('app/keys/id2name_list.dict', 'rb'), encoding='utf-8')
 
 
 def send_to_slack(json_data):
@@ -35,7 +37,7 @@ def create_slack_message(json_data):
     :return:
     """
     payload = {
-        "username": '[{topicCategory}] {topicRequester}'.format(**json_data),
+        "username": '[{topicCategory}]'.format(**json_data) + ' ' + id2name(json_data["topicRequester"]),
         "text": "",
         "attachments": [
             {
@@ -98,8 +100,9 @@ def get_slack_channel_url(channel):
     :param channel:
     :return:
     """
-    channel = NIKL_SLACK_CH_URL.get(channel) or FALLBACK_SLACK_CH_URL
-    return channel
+    # channel = NIKL_SLACK_CH_URL.get(channel) or FALLBACK_SLACK_CH_URL
+    # return channel
+    return FALLBACK_SLACK_CH_URL
 
 
 def parse_simple_conllu(sentence):
@@ -119,3 +122,7 @@ def parse_simple_conllu(sentence):
             result += '\t_'
         result += '\n'
     return result
+
+
+def id2name(id):
+    return dictionary[id] or id

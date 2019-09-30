@@ -9,6 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from app.keys.url_gsheet import NIKL_GSHEET_URL
 from app.keys.url_gsheet import FALLBACK_GSHEET_URL
 from datetime import datetime, timedelta
+from .to_slack import id2name
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -41,10 +42,12 @@ def create_row_data(json_data):
     :param json_data:
     :return:
     """
+    word = json_data["topicContext"]["word"].strip().split('] ')[1]
+    word_id = str(json_data["topicContext"]["word"].strip().split('] ')[0][1:])
     data = {
         "values": [
             [str(datetime.now() + timedelta(hours=9)), json_data["taskName"], json_data["topicContext"]["sentence"],
-             json_data["topicContext"]["word"], "Word", "Name",
+             word_id, word, id2name(json_data["topicRequester"]),
              json_data["topicRequester"], json_data["topicContent"]],
         ]
     }
@@ -56,5 +59,6 @@ def get_gsheet_url(category):
     :param category:
     :return:
     """
-    gsheet_url = NIKL_GSHEET_URL.get(category) or FALLBACK_GSHEET_URL
-    return gsheet_url
+    # gsheet_url = NIKL_GSHEET_URL.get(category) or FALLBACK_GSHEET_URL
+    # return gsheet_url
+    return FALLBACK_GSHEET_URL
