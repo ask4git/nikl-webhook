@@ -100,9 +100,9 @@ def get_slack_channel_url(channel):
     :param channel:
     :return:
     """
-    # channel = NIKL_SLACK_CH_URL.get(channel) or FALLBACK_SLACK_CH_URL
-    # return channel
-    return FALLBACK_SLACK_CH_URL
+    channel = NIKL_SLACK_CH_URL.get(channel) or FALLBACK_SLACK_CH_URL
+    return channel
+    # return FALLBACK_SLACK_CH_URL
 
 
 def parse_simple_conllu(sentence):

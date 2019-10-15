@@ -59,6 +59,6 @@ def get_gsheet_url(category):
     :param category:
     :return:
     """
-    # gsheet_url = NIKL_GSHEET_URL.get(category) or FALLBACK_GSHEET_URL
-    # return gsheet_url
-    return FALLBACK_GSHEET_URL
+    gsheet_url = NIKL_GSHEET_URL.get(category) or FALLBACK_GSHEET_URL
+    return gsheet_url
+    # return FALLBACK_GSHEET_URL
